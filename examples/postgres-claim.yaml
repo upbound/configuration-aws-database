@@ -1,0 +1,28 @@
+apiVersion: aws.platform.upbound.io/v1alpha1
+kind: SQLInstance
+metadata:
+  name: configuration-aws-database-postgres
+  namespace: default
+spec:
+  parameters:
+    region: us-west-2
+    engine: postgres
+    engineVersion: "13.7"
+    storageGB: 5
+    passwordSecretRef:
+      namespace: default
+      name: psqlsecret
+      key: password
+    networkRef:
+      id: configuration-aws-database
+  writeConnectionSecretToRef:
+    name: configuration-aws-database-postgres
+---
+apiVersion: v1
+data:
+  password: dXBiMHVuZHIwY2s1ITMxMzM3
+kind: Secret
+metadata:
+  name: psqlsecret
+  namespace: default
+type: Opaque

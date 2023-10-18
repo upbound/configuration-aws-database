@@ -1,0 +1,20 @@
+apiVersion: aws.platform.upbound.io/v1alpha1
+kind: SQLInstance
+metadata:
+  name: configuration-aws-database-mariadb
+  namespace: default
+spec:
+  parameters:
+    region: us-west-2
+    engine: mariadb
+    engineVersion: "10.6.10"
+    storageGB: 5
+    autoGeneratePassword: true
+    passwordSecretRef:
+      namespace: default
+      name: mariadbsecret
+      key: password
+    networkRef:
+      id: configuration-aws-database
+  writeConnectionSecretToRef:
+    name: configuration-aws-database-mariadb
