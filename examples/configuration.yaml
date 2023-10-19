@@ -1,0 +1,6 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: configuration-aws-database
+spec:
+  package: xpkg.upbound.io/upbound/configuration-aws-database:v0.1.0
