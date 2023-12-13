@@ -1,7 +1,7 @@
 apiVersion: meta.pkg.crossplane.io/v1alpha1
 kind: Configuration
 metadata:
-  name: platform-ref-aws
+  name: configuration-aws-database
   annotations:
     meta.crossplane.io/maintainer: Upbound <support@upbound.io>
     meta.crossplane.io/source: github.com/upbound/configuration-aws-database
