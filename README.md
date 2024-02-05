@@ -1,7 +1,7 @@
 # AWS Database Configuration
 
 
-This repository contains a [Crossplane configuration](https://docs.crossplane.io/v1.11/concepts/packages/#configuration-packages), tailored for users establishing their initial control plane with [Upbound](https://cloud.upbound.io). This configuration deploys fully managed [AWS database]() instances.
+This repository contains a [Crossplane configuration](https://docs.crossplane.io/v1.11/concepts/packages/#configuration-packages), tailored for users establishing their initial control plane with [Upbound](https://cloud.upbound.io). This configuration deploys fully managed [AWS database](https://aws.amazon.com/getting-started/decision-guides/databases-on-aws-how-to-choose/) instances.
 
 ## Overview
 
@@ -10,10 +10,10 @@ The core components of a custom API in [Crossplane](https://docs.crossplane.io/v
 - **CompositeResourceDefinition (XRD):** Defines the API's structure.
 - **Composition(s):** Implements the API by orchestrating a set of Crossplane managed resources.
 
-In this specific configuration, the [AWS database] API contains:
+In this specific configuration, the AWS database API contains:
 
-- **an [RDS](/apis/definition.yaml) custom resource type.**
-- **Composition of the [] resources:** Configured in [/apis/composition.yaml](/apis/composition.yaml), it provisions an [] and resources in the `upbound-system` namespace.
+- **a [database](/apis/definition.yaml) custom resource type.**
+- **Composition of the database resources:** Configured in [/apis/composition.yaml](/apis/composition.yaml), it provisions AWS database resources in the `upbound-system` namespace.
 
 This repository contains an Composite Resource (XR) file.
 
