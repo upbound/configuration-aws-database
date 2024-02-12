@@ -7,7 +7,7 @@ spec:
   parameters:
     region: us-west-2
     engine: postgres
-    engineVersion: "13.7"
+    engineVersion: "13.13"
     storageGB: 5
     passwordSecretRef:
       namespace: default
