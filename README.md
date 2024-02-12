@@ -25,7 +25,7 @@ kind: Configuration
 metadata:
   name: configuration-aws-database
 spec:
-  package: xpkg.upbound.io/upbound/configuration-aws-database:v0.7.0
+  package: xpkg.upbound.io/upbound/configuration-aws-database:v0.8.0
 ```
 
 ## Next steps
