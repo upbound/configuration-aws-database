@@ -19,7 +19,7 @@ spec:
   dependsOn:
     - provider: xpkg.upbound.io/upbound/provider-aws-rds
       # renovate: datasource=github-releases depName=upbound/provider-aws
-      version: "v0.47.1"
+      version: "v1.1.0"
     - configuration: xpkg.upbound.io/upbound/configuration-aws-network
       # renovate: datasource=github-releases depName=upbound/configuration-aws-network
       version: "v0.11.0"
