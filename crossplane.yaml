@@ -23,3 +23,6 @@ spec:
     - configuration: xpkg.upbound.io/upbound/configuration-aws-network
       # renovate: datasource=github-releases depName=upbound/configuration-aws-network
       version: "v0.17.0"
+    - function: xpkg.upbound.io/crossplane-contrib/function-patch-and-transform
+      # renovate: datasource=github-releases depName=crossplane-contrib/function-patch-and-transform
+      version: "v0.7.0"
