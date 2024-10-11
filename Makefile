@@ -1,5 +1,42 @@
+# Usage
+# ====================================================================================
+# Generic Makefile to be used across repositories building a crossplane configuration
+# package
+#
+# Available targets:
+#
+# - `yamllint`
+#   Runs yamllint for all files in `api`-folder recursively
+#
+# - `render`
+#   Runs crossplane render to render the output of the composition. Usefule for quick
+#   feedback in order to test templating.
+#   Important note:
+#		Claims need following annotations in order for render to work (adjust the paths
+#		if necessary):
+#			render.crossplane.io/composition-path: apis/pat/composition.yaml
+#			render.crossplane.io/function-path: examples/functions.yaml
+#
+# - `e2e`
+#   Runs full end-to-end test, including creating cluster, setting up the configuration
+#   and testing if create, import and delete work as expected.
+#	Available options:
+#		UPTEST_SKIP_DELETE (default `false`) skips the deletion of any resources created during the test
+#		UPTEST_SKIP_UPDATE (default `false`) skips testing the update of the claims
+#		UPTEST_SKIP_IMPORT (default `true`) skips testing the import of resources
+#	Example:
+#		`make e2e UPTEST_SKIP_DELETE=true`
+
 # Project Setup
-PROJECT_NAME := configuration-aws-database
+# ====================================================================================
+
+# Include project.mk for project specific settings
+include project.mk
+
+ifndef PROJECT_NAME
+  $(error PROJECT_NAME is not set. Please create `project.mk` and set it there.)
+endif
+
 PROJECT_REPO := github.com/upbound/$(PROJECT_NAME)
 
 # NOTE(hasheddan): the platform is insignificant here as Configuration package
@@ -11,9 +48,9 @@ PLATFORMS ?= linux_amd64
 # ====================================================================================
 # Setup Kubernetes tools
 
-UP_VERSION = v0.28.0
+UP_VERSION = v0.34.0
 UP_CHANNEL = stable
-UPTEST_VERSION = v0.11.1
+CROSSPLANE_CLI_VERSION = v1.17.1
 
 -include build/makelib/k8s_tools.mk
 # ====================================================================================
@@ -27,10 +64,24 @@ XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
 XPKGS = $(PROJECT_NAME)
 -include build/makelib/xpkg.mk
 
+CROSSPLANE_VERSION = v1.17.1-up.1
+CROSSPLANE_CHART_REPO = https://charts.upbound.io/stable
+CROSSPLANE_CHART_NAME = universal-crossplane
 CROSSPLANE_NAMESPACE = upbound-system
-#CROSSPLANE_ARGS = "--enable-usages"
+CROSSPLANE_ARGS = "--enable-usages"
+KIND_CLUSTER_NAME ?= uptest-$(PROJECT_NAME)
+
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
+
+# ====================================================================================
+# Testing
+
+UPTEST_VERSION = v1.1.2
+UPTEST_LOCAL_DEPLOY_TARGET = local.xpkg.deploy.configuration.$(PROJECT_NAME)
+UPTEST_DEFAULT_TIMEOUT = 2400s
+
+-include build/makelib/uptest.mk
 
 # ====================================================================================
 # Targets
@@ -55,27 +106,6 @@ submodules:
 # machinery sets UP to point to tool cache.
 build.init: $(UP)
 
-# ====================================================================================
-# End to End Testing
 
-# This target requires the following environment variables to be set:
-# - UPTEST_CLOUD_CREDENTIALS, cloud credentials for the provider being tested, e.g. export UPTEST_CLOUD_CREDENTIALS=$(cat ~/.aws/credentials)
-# - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
-uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
-	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) $(UPTEST) e2e examples/mariadb-claim.yaml,examples/postgres-claim.yaml,examples/network.yaml --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=test/setup.sh --default-timeout=2400 || $(FAIL)
-	@$(OK) running automated tests
-
-# This target requires the following environment variables to be set:
-# - UPTEST_CLOUD_CREDENTIALS, cloud credentials for the provider being tested, e.g. export UPTEST_CLOUD_CREDENTIALS=$(cat ~/.aws/credentials)
-e2e: build controlplane.up local.xpkg.deploy.configuration.$(PROJECT_NAME) uptest
-
-render:
-	crossplane beta render examples/mariadb-claim.yaml apis/composition.yaml examples/functions.yaml -r
-
-yamllint:
-	@$(INFO) running yamllint
-	@yamllint ./apis || $(FAIL)
-	@$(OK) running yamllint
-
-.PHONY: uptest e2e render yamllint
+help.local:
+	@grep -E '^[a-zA-Z_-]+.*:.*?## .*$$' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
