@@ -1,6 +1,9 @@
 apiVersion: aws.platform.upbound.io/v1alpha1
 kind: SQLInstance
 metadata:
+  annotations:
+    render.crossplane.io/composition-path: apis/composition.yaml
+    render.crossplane.io/function-path: examples/functions.yaml
   name: configuration-aws-database-mariadb
   namespace: default
 spec:
