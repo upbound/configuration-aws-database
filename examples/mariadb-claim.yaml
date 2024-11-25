@@ -3,6 +3,9 @@ kind: SQLInstance
 metadata:
   name: configuration-aws-database-mariadb
   namespace: default
+  annotations:
+    render.crossplane.io/composition-path: apis/composition.yaml
+    render.crossplane.io/function-path: examples/functions.yaml
 spec:
   parameters:
     region: us-west-2
