@@ -1,19 +1,16 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  labels:
-    provider: aws
-  name: xsqlinstances.aws.platform.upbound.io
+  name: sqlinstances.aws.platform.upbound.io
 spec:
   compositeTypeRef:
     apiVersion: aws.platform.upbound.io/v1alpha1
-    kind: XSQLInstance
+    kind: SQLInstance
   mode: Pipeline
   pipeline:
   - functionRef:
-      name: upbound-configuration-aws-databasexsqlinstance
-    step: xsqlinstance
+      name: upbound-configuration-aws-databasesqlinstance
+    step: sqlinstance
   - functionRef:
       name: crossplane-contrib-function-auto-ready
     step: crossplane-contrib-function-auto-ready
-  writeConnectionSecretsToNamespace: upbound-system

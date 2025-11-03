@@ -1,4 +1,4 @@
-import models.io.upbound.aws.rds.v1beta1 as rdsv1beta1
+import models.io.upbound.awsm.rds.v1beta1 as rdsv1beta1
 import models.io.upbound.dev.meta.v1alpha1 as metav1alpha1
 import models.io.upbound.platform.aws.v1alpha1 as platformawsv1alpha1
 
@@ -7,7 +7,7 @@ _items = [
         metadata.name: "TestMariaDB"
         spec = {
             assertResources: [
-                platformawsv1alpha1.XSQLInstance{
+                platformawsv1alpha1.SQLInstance{
                     metadata = {
                         name = "configuration-aws-database-mariadb"
                     }
@@ -22,14 +22,9 @@ _items = [
                             passwordSecretRef = {
                                 key = "password"
                                 name = "mariadbsecret"
-                                namespace = "default"
                             }
                             region = "us-west-2"
                             storageGB = 5
-                        }
-                        writeConnectionSecretToRef = {
-                            name = "configuration-aws-database-mariadb"
-                            namespace = "default"
                         }
                     }
                 }
@@ -47,7 +42,7 @@ _items = [
                                 apiVersion = "aws.platform.upbound.io/v1alpha1"
                                 blockOwnerDeletion = True
                                 controller = True
-                                kind = "XSQLInstance"
+                                kind = "SQLInstance"
                                 name = "configuration-aws-database-mariadb"
                                 uid = ""
                             }
@@ -67,7 +62,6 @@ _items = [
                             passwordSecretRef = {
                                 key = "password"
                                 name = "mariadbsecret"
-                                namespace = "default"
                             }
                             publiclyAccessible = False
                             region = "us-west-2"
@@ -78,6 +72,9 @@ _items = [
                                     "networks.aws.platform.upbound.io/network-id" = "configuration-aws-database"
                                 }
                             }
+                        }
+                        writeConnectionSecretToRef = {
+                            name = "configuration-aws-database-mariadb-sql"
                         }
                     }
                 }
@@ -95,7 +92,7 @@ _items = [
                                 apiVersion = "aws.platform.upbound.io/v1alpha1"
                                 blockOwnerDeletion = True
                                 controller = True
-                                kind = "XSQLInstance"
+                                kind = "SQLInstance"
                                 name = "configuration-aws-database-mariadb"
                                 uid = ""
                             }
@@ -114,9 +111,9 @@ _items = [
                     }
                 }
             ]
-            compositionPath: "apis/composition.yaml"
-            xrdPath: "apis/definition.yaml"
-            xrPath: "examples/mariadb-xr.yaml"
+            compositionPath: "apis/sqlinstances/composition.yaml"
+            xrdPath: "apis/sqlinstances/definition.yaml"
+            xrPath: "examples/sqlinstance/mariadb-xr.yaml"
             timeoutSeconds: 60
             validate: False
         }
@@ -125,7 +122,7 @@ _items = [
         metadata.name: "TestPostgres"
         spec = {
             assertResources: [
-                platformawsv1alpha1.XSQLInstance{
+                platformawsv1alpha1.SQLInstance{
                     metadata = {
                         name = "configuration-aws-database-postgres"
                         namespace = "default"
@@ -140,14 +137,9 @@ _items = [
                             passwordSecretRef = {
                                 key = "password"
                                 name = "psqlsecret"
-                                namespace = "default"
                             }
                             region = "us-west-2"
                             storageGB = 5
-                        }
-                        writeConnectionSecretToRef = {
-                            name = "configuration-aws-database-postgres"
-                            namespace = "default"
                         }
                     }
                 }
@@ -165,7 +157,7 @@ _items = [
                                 apiVersion = "aws.platform.upbound.io/v1alpha1"
                                 blockOwnerDeletion = True
                                 controller = True
-                                kind = "XSQLInstance"
+                                kind = "SQLInstance"
                                 name = "configuration-aws-database-postgres"
                                 uid = ""
                             }
@@ -184,7 +176,6 @@ _items = [
                             passwordSecretRef = {
                                 key = "password"
                                 name = "psqlsecret"
-                                namespace = "default"
                             }
                             publiclyAccessible = False
                             region = "us-west-2"
@@ -195,6 +186,9 @@ _items = [
                                     "networks.aws.platform.upbound.io/network-id" = "configuration-aws-database"
                                 }
                             }
+                        }
+                        writeConnectionSecretToRef = {
+                            name = "configuration-aws-database-postgres-sql"
                         }
                     }
                 }
@@ -212,7 +206,7 @@ _items = [
                                 apiVersion = "aws.platform.upbound.io/v1alpha1"
                                 blockOwnerDeletion = True
                                 controller = True
-                                kind = "XSQLInstance"
+                                kind = "SQLInstance"
                                 name = "configuration-aws-database-postgres"
                                 uid = ""
                             }
@@ -231,9 +225,9 @@ _items = [
                     }
                 }
             ]
-            compositionPath: "apis/composition.yaml"
-            xrdPath: "apis/definition.yaml"
-            xrPath: "examples/postgres-xr.yaml"
+            compositionPath: "apis/sqlinstances/composition.yaml"
+            xrdPath: "apis/sqlinstances/definition.yaml"
+            xrPath: "examples/sqlinstance/postgres-xr.yaml"
             timeoutSeconds: 60
             validate: False
         }

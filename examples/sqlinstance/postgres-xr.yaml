@@ -1,5 +1,5 @@
 apiVersion: aws.platform.upbound.io/v1alpha1
-kind: XSQLInstance
+kind: SQLInstance
 metadata:
   name: configuration-aws-database-postgres
   namespace: default
@@ -10,14 +10,10 @@ spec:
     engineVersion: "13.18"
     storageGB: 5
     passwordSecretRef:
-      namespace: default
       name: psqlsecret
       key: password
     networkRef:
       id: configuration-aws-database
-  writeConnectionSecretToRef:
-    name: configuration-aws-database-postgres
-    namespace: default
 ---
 apiVersion: v1
 data:
