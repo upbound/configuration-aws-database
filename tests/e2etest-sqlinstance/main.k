@@ -13,6 +13,7 @@ _items = [
                 platformawsv1alpha1.SQLInstance{
                     metadata = {
                         name = "configuration-aws-database-mariadb"
+                        namespace = "default"
                     }
                     spec = {
                         parameters = {
@@ -34,6 +35,7 @@ _items = [
                 platformawsv1alpha1.SQLInstance{
                     metadata = {
                         name = "configuration-aws-database-postgres"
+                        namespace = "default"
                     }
                     spec = {
                         parameters = {
@@ -57,6 +59,7 @@ _items = [
                     kind = "Network"
                     metadata = {
                         name = "configuration-aws-database"
+                        namespace = "default"
                     }
                     spec = {
                         parameters = {
