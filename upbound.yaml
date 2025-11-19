@@ -1,14 +1,20 @@
-apiVersion: meta.dev.upbound.io/v1alpha1
+apiVersion: meta.dev.upbound.io/v2alpha1
 kind: Project
 metadata:
   name: configuration-aws-database
 spec:
   dependsOn:
-  - provider: xpkg.upbound.io/upbound/provider-aws-rds
-    version: v1
-  - configuration: xpkg.upbound.io/upbound/configuration-aws-network
-    version: v0.24.0
-  - function: xpkg.upbound.io/crossplane-contrib/function-auto-ready
+  - apiVersion: pkg.crossplane.io/v1
+    kind: Provider
+    package: xpkg.upbound.io/upbound/provider-aws-rds
+    version: v2
+  - apiVersion: pkg.crossplane.io/v1
+    kind: Configuration
+    package: xpkg.upbound.io/upbound/configuration-aws-network
+    version: v2.0.0
+  - apiVersion: pkg.crossplane.io/v1
+    kind: Function
+    package: xpkg.upbound.io/crossplane-contrib/function-auto-ready
     version: '>=v0.0.0'
   description: This repository provides a foundational configuration to build and
     operate an AWS database, including handling its dependencies and configurations.

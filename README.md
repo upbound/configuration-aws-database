@@ -14,7 +14,7 @@ In this specific configuration, the API contains:
 
 - **an [AWS Database](/apis/definition.yaml) custom resource type.**
 - **Composition:** Configured in [/apis/composition.yaml](/apis/composition.yaml)
-- **Embedded Function:** The Composition logic is encapsulated within [embedded function](/functions/xsqlinstance/main.k)
+- **Embedded Function:** The Composition logic is encapsulated within [embedded function](/functions/sqlinstance/main.k)
 
 ## Testing
 
