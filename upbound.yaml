@@ -7,7 +7,7 @@ spec:
   - provider: xpkg.upbound.io/upbound/provider-aws-rds
     version: v1
   - configuration: xpkg.upbound.io/upbound/configuration-aws-network
-    version: v0.24.0
+    version: v1.0.0
   - function: xpkg.upbound.io/crossplane-contrib/function-auto-ready
     version: '>=v0.0.0'
   description: This repository provides a foundational configuration to build and
