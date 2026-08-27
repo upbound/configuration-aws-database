@@ -2,7 +2,6 @@ import models.io.upbound.awsm.rds.v1beta1 as rdsv1beta1
 import models.io.upbound.platform.aws.v1alpha1 as awsv1alpha1
 import models.k8s.apimachinery.pkg.apis.meta.v1 as metav1
 
-import base64
 
 oxr = option("params").oxr # observed composite resource
 _ocds = option("params").ocds # observed composed resources
@@ -61,24 +60,16 @@ _items = [
 
                 }
             }
+            # This Secret is the supported way to consume a SQLInstance's
+            # credentials, and its name is part of this configuration's
+            # interface: "<SQLInstance name>-sql", in the SQLInstance's own
+            # namespace. It carries endpoint, address, host, username, port and
+            # password. Renaming it is a breaking change for consumers.
             writeConnectionSecretToRef = {
                 name = "{}-sql".format(oxr.metadata.name)
             }
         }
     }
 
-    {
-        apiVersion: "meta.krm.kcl.dev/v1alpha1"
-        kind: "CompositeConnectionDetails"
-        if "RDSInstanceSmall" in _ocds:
-            data: {
-                endpoint = _ocds["RDSInstanceSmall"].Resource?.status?.atProvider?.endpoint
-                host = _ocds["RDSInstanceSmall"].Resource?.status?.atProvider?.address
-                username = base64.encode(_ocds["RDSInstanceSmall"].Resource?.spec?.forProvider?.username)
-                password = _ocds["RDSInstanceSmall"].ConnectionDetails.password
-            }
-        else:
-            data: {}
-    }
 ]
 items = _items
