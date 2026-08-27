@@ -16,6 +16,32 @@ In this specific configuration, the API contains:
 - **Composition:** Configured in [/apis/composition.yaml](/apis/composition.yaml)
 - **Embedded Function:** The Composition logic is encapsulated within [embedded function](/functions/sqlinstance/main.k)
 
+## Connecting to the database
+
+Each `SQLInstance` writes its credentials to a Secret named
+`<SQLInstance name>-sql`, in the `SQLInstance`'s own namespace. That name is
+part of this configuration's interface; consumers can rely on it.
+
+| Key | Value |
+|---|---|
+| `endpoint` | `host:port` |
+| `address` | Hostname |
+| `host` | Hostname (a duplicate of `address`) |
+| `port` | Port |
+| `username` | Master username |
+| `password` | Master password |
+
+The Secret is written by the RDS managed resource the composition creates, so
+it appears once that instance is available — roughly ten minutes after the
+`SQLInstance` is applied. A workload can reference it before then; pods wait in
+`CreateContainerConfigError` and start on kubelet's own retry once it exists.
+
+Note that a `SQLInstance` does **not** publish Crossplane connection details of
+its own. It is a namespaced `apiextensions.crossplane.io/v2` composite, and
+Crossplane does not support connection secrets for those — there is no
+`writeConnectionSecretToRef` on the composite, and its publisher is a no-op.
+The Secret above is the only mechanism.
+
 ## Testing
 
 The configuration can be tested using:
