@@ -38,16 +38,6 @@ _items = [
                         labels = {
                             "crossplane.io/composite" = "configuration-aws-database-mariadb"
                         }
-                        ownerReferences = [
-                            {
-                                apiVersion = "aws.platform.upbound.io/v1alpha1"
-                                blockOwnerDeletion = True
-                                controller = True
-                                kind = "SQLInstance"
-                                name = "configuration-aws-database-mariadb"
-                                uid = ""
-                            }
-                        ]
                     }
                     spec = {
                         forProvider = {
@@ -88,16 +78,6 @@ _items = [
                         labels = {
                             "crossplane.io/composite" = "configuration-aws-database-mariadb"
                         }
-                        ownerReferences = [
-                            {
-                                apiVersion = "aws.platform.upbound.io/v1alpha1"
-                                blockOwnerDeletion = True
-                                controller = True
-                                kind = "SQLInstance"
-                                name = "configuration-aws-database-mariadb"
-                                uid = ""
-                            }
-                        ]
                     }
                     spec = {
                         forProvider = {
@@ -153,16 +133,6 @@ _items = [
                         labels = {
                             "crossplane.io/composite" = "configuration-aws-database-postgres"
                         }
-                        ownerReferences = [
-                            {
-                                apiVersion = "aws.platform.upbound.io/v1alpha1"
-                                blockOwnerDeletion = True
-                                controller = True
-                                kind = "SQLInstance"
-                                name = "configuration-aws-database-postgres"
-                                uid = ""
-                            }
-                        ]
                     }
                     spec = {
                         forProvider = {
@@ -202,16 +172,6 @@ _items = [
                         labels = {
                             "crossplane.io/composite" = "configuration-aws-database-postgres"
                         }
-                        ownerReferences = [
-                            {
-                                apiVersion = "aws.platform.upbound.io/v1alpha1"
-                                blockOwnerDeletion = True
-                                controller = True
-                                kind = "SQLInstance"
-                                name = "configuration-aws-database-postgres"
-                                uid = ""
-                            }
-                        ]
                     }
                     spec = {
                         forProvider = {
